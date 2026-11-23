@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 530" fill="none">
+<defs>
+ <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" stroke="#998f77" stroke-opacity=".18"/></pattern>
+ <pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M-2 2L2-2M0 5L5 0M3 7L7 3" stroke="#34463a" stroke-opacity=".3"/></pattern>
+</defs>
+<rect x="42" y="32" width="556" height="452" rx="4" fill="#ede8d7" stroke="#aaa58d"/>
+<rect x="42" y="32" width="556" height="452" fill="url(#grid)"/>
+<path d="M57 58v-11h11m515 0h-11m11 0v11M57 458v11h11m515-11v11h-11" stroke="#807e68"/>
+<g font-family="monospace" fill="#526253" font-size="11" letter-spacing="1.8"><text x="69" y="75">WORKSHOP DRAWING</text><text x="570" y="75" text-anchor="end">FIG. 01</text><text x="69" y="451">INPUT: CURIOSITY</text><text x="570" y="451" text-anchor="end">OUTPUT: POSSIBILITY</text></g>
+<path d="M77 414h482M99 155h440M111 112v294m420-294v294" stroke="#9a9b83" stroke-dasharray="4 5"/>
+<path d="M120 407H514M120 402v10m394-10v10" stroke="#7e856c"/>
+<ellipse cx="322" cy="391" rx="173" ry="14" fill="#c1b89d" opacity=".55"/>
+<g stroke="#253f33" stroke-width="2" stroke-linejoin="round">
+ <path d="M231 153l30-20h138l39 24-27 203-28 21H231z" fill="#657b62"/>
+ <path d="M383 155l55 2v196l-55 28z" fill="#52684f"/>
+ <path d="M241 153l24-20h137l36 24-53 14z" fill="#acb39a"/>
+ <rect x="215" y="152" width="171" height="228" rx="13" fill="#8e9e80"/>
+ <rect x="227" y="165" width="147" height="199" rx="7" fill="#b6bd9f"/>
+ <path d="M230 288h141m-141 7h141" opacity=".6"/>
+ <path d="M395 319l30-14v34l-30 14z" fill="url(#hatch)"/>
+ <path d="M402 180l25-10v74l-25 9z" fill="#a5ad8e"/>
+ <path d="M409 188l11-5m-11 16l11-5m-11 16l11-5m-11 16l11-5m-11 16l11-5"/>
+ <rect x="243" y="180" width="115" height="96" rx="8" fill="#304c42"/>
+ <rect x="252" y="189" width="97" height="77" rx="4" fill="#ddd7b8" stroke="#b8ba99"/>
+ <path d="M258 229h11l8-15 10 28 11-37 10 36 11-20 7 8h16" stroke="#55745e" stroke-width="2"/>
+ <circle cx="240" cy="175" r="2" fill="#3d5945"/><circle cx="363" cy="175" r="2" fill="#3d5945"/><circle cx="240" cy="351" r="2" fill="#3d5945"/><circle cx="363" cy="351" r="2" fill="#3d5945"/>
+ <rect x="246" y="307" width="108" height="38" rx="6" fill="#354e3f"/>
+ <path d="M257 326h38" stroke="#d7d8b5" stroke-width="4" stroke-linecap="round"/>
+ <circle cx="329" cy="326" r="12" fill="#bf6e4f"/><path d="M329 319v7" stroke="#f7eace" stroke-linecap="round"/>
+ <path d="M210 374h181v13H210z" fill="#536c52"/><path d="M391 374l50-27v13l-50 27z" fill="#3e5a46"/>
+ <path d="M181 244h34v68h-34z" fill="#b5bc9e"/><path d="M110 284h73l16 11v22h-89z" fill="#62795e"/>
+ <path d="M110 302h89v15h-89z" fill="#c6c5a4"/>
+ <circle cx="124" cy="309" r="5" fill="#60775b"/><circle cx="153" cy="309" r="5" fill="#60775b"/><circle cx="182" cy="309" r="5" fill="#60775b"/>
+ <path d="M123 278l34-13 31 12-32 13z" fill="#fbf2d8"/><path d="M135 277l22-8 17 6" stroke="#a67754"/>
+ <path d="M436 266h73l16 11v24h-89z" fill="#62795e"/><path d="M436 284h89v17h-89z" fill="#c6c5a4"/>
+ <circle cx="451" cy="292" r="5" fill="#60775b"/><circle cx="480" cy="292" r="5" fill="#60775b"/><circle cx="509" cy="292" r="5" fill="#60775b"/>
+ <path d="M277 152v-22h47v22z" fill="#677f62"/><path d="M269 130h62l13-44h-88z" fill="#b5bc9e"/><path d="M256 86h88v10h-88z" fill="#587055"/>
+ <path d="M290 129l-12-27m37 27l12-27" stroke="#506b52"/>
+ <path d="M454 249l24-31 30 17-23 32z" fill="#faf0d3"/><path d="M471 244l10-13 12 7m-26 13l11 6m-7-13l11 6" stroke="#9a664c" stroke-width="1.3"/>
+</g>
+<g stroke="#a35c43" stroke-width="1.4" stroke-linecap="round"><path d="M481 209v-10m-7 7l-6-5m24 5l6-6M173 165l-31-16m6 30h-26m47 12l-17 18"/><path d="M484 197c17-32 46-16 58-42 5-12-5-16-13-10-11 9-4 23 14 14l19-11" stroke-dasharray="3 5"/><path d="M559 141l23-6-15 16-2-7z" fill="#f4d3b4"/></g>
+<g font-family="monospace" fill="#834d37" font-size="10" letter-spacing="1"><text x="73" y="137">A GOOD QUESTION</text><text x="457" y="328">TRY IT OUT</text></g>
+<path d="M459 319v-10" stroke="#a35c43"/>
+</svg>
