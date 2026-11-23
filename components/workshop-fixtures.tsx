@@ -54,14 +54,14 @@ export function LeverMachine() {
     if (!gesture || event.pointerId !== gesture.id) return;
     const alongLine = Math.abs(event.clientY - gesture.baseline) <= 25;
     const progress = Math.max(0, Math.min(1, (event.clientX - gesture.left) / (gesture.target - gesture.left)));
-    event.currentTarget.closest<HTMLElement>('.machine-receipt')?.style.setProperty('--tear-progress', alongLine ? String(progress) : '0');
+    event.currentTarget.style.setProperty('--tear-progress', alongLine ? String(progress) : '0');
     return alongLine && progress >= 1;
   }
 
   function clearCut(event: PointerEvent<HTMLButtonElement>) {
     if (cut.current?.id !== event.pointerId) return;
     cut.current = null;
-    event.currentTarget.closest<HTMLElement>('.machine-receipt')?.style.removeProperty('--tear-progress');
+    event.currentTarget.style.removeProperty('--tear-progress');
   }
 
   const message = status === 'ready' ? 'Ready to dispense'
