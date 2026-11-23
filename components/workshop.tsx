@@ -12,6 +12,7 @@ const cargoIcons = [BookOpen, ClipboardList, AudioLines, Radar];
 const cargoNouns = ['Research dossier', 'Academic assistant', 'Lecture companion', 'Dispatch console'];
 
 export function Workshop({ projects, studies, portrait }: { projects: Project[]; studies: ReactNode[]; portrait?: string }) {
+  const [notebookOpen, setNotebookOpen] = useState(false);
   const [running, setRunning] = useState(true);
   const [leftLight, setLeftLight] = useState(true);
   const [rightLight, setRightLight] = useState(true);
@@ -116,13 +117,28 @@ export function Workshop({ projects, studies, portrait }: { projects: Project[];
 
   return <main id="main" className="workshop">
     <div className="room" data-left-lit={leftLight} data-right-lit={rightLight}>
-      <section className={'landing-workbench' + (portrait ? ' landing-with-portrait' : '')} aria-label="Introducing Navjot Jaswal">
+      <section className={'landing-workbench' + (portrait ? ' landing-with-portrait' : '')} data-notebook-open={notebookOpen} aria-label="Introducing Navjot Jaswal">
         {portrait && <figure className="workshop-portrait"><Image src={portrait} alt="Navjot Jaswal" width={1125} height={1210} unoptimized priority /></figure>}
         <div className="landing-sign">
           <h1>Navjot <em>Jaswal</em></h1>
           <p className="landing-tagline">I turn “what if?” into “what’s next.”</p>
         </div>
-        <MakersNotebook />
+        <div className="notebook-station">
+          <button type="button" className="closed-notebook" aria-expanded={notebookOpen} aria-controls="landing-notebook" hidden={notebookOpen}
+            onClick={() => {
+              setNotebookOpen(true);
+              requestAnimationFrame(() => document.getElementById('close-landing-notebook')?.focus({ preventScroll: true }));
+            }} id="open-landing-notebook">
+            <span className="closed-notebook-title">Maker’s<br />Notes</span><span className="closed-notebook-action">Open notebook</span>
+          </button>
+          <div id="landing-notebook" className="notebook-open-spread" hidden={!notebookOpen}>
+            <MakersNotebook />
+            <button type="button" id="close-landing-notebook" className="close-notebook" onClick={() => {
+              setNotebookOpen(false);
+              requestAnimationFrame(() => document.getElementById('open-landing-notebook')?.focus({ preventScroll: true }));
+            }}>Close notebook</button>
+          </div>
+        </div>
         <PendantLight side="left" on={leftLight} toggle={() => setLeftLight(value => !value)} />
         <PendantLight side="right" on={rightLight} toggle={() => setRightLight(value => !value)} />
       </section>
