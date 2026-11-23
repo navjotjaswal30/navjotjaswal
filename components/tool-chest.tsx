@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import { AudioLines, BookOpen, CalendarDays, CircuitBoard, ClipboardList, Code2, Cpu, Download, FileText, GraduationCap, Laptop, LifeBuoy, Megaphone, Mic2, Network, Radio, Radar, Timer, Wrench } from 'lucide-react';
 import { experience, projects } from '../content/portfolio';
 
@@ -43,16 +46,23 @@ const drawers = [
 ];
 
 export function ToolChest() {
+  const [open, setOpen] = useState<string | null>(null);
   return <section id="toolkit" className="workshop-zone toolkit-zone" aria-labelledby="toolkit-title">
     <div className="zone-heading"><div><p className="zone-label">Résumé tool chest</p><h2 id="toolkit-title">My toolkit.</h2><p>Pull open a drawer, then inspect the tools inside.</p></div>
       <div className="resume-ports"><a href="/resume.pdf" target="_blank" rel="noreferrer"><FileText size={16} /> View résumé</a><a href="/resume.pdf" download="Navjot-Jaswal-Resume.pdf"><Download size={16} /> Download PDF</a></div>
     </div>
     <div className="tool-chest">
       <div className="chest-lid" aria-hidden="true"><span /><span /></div>
-      {drawers.map(({ name, Icon, content }) => <details className="chest-drawer" key={name} name="tool-chest-drawers">
-        <summary><span className="drawer-plaque"><Icon size={20} strokeWidth={1.5} /> {name}</span><span className="chest-handle" aria-hidden="true" /><span className="drawer-chevron" aria-hidden="true">⌄</span></summary>
-        <div className="birdseye-tray">{content}</div>
-      </details>)}
+      {drawers.map(({ name, Icon, content }, i) => {
+        const expanded = open === name;
+        const id = 'chest-tray-' + i;
+        return <div className="chest-drawer" data-open={expanded} key={name}>
+          <button type="button" className="drawer-front-panel" aria-expanded={expanded} aria-controls={id} onClick={() => setOpen(expanded ? null : name)}>
+            <span className="drawer-plaque"><Icon size={20} strokeWidth={1.5} /> {name}</span><span className="chest-handle" aria-hidden="true" /><span className="drawer-chevron" aria-hidden="true">⌄</span>
+          </button>
+          <div className="drawer-runner" id={id} inert={!expanded}><div className="drawer-basket"><div className="birdseye-tray">{content}</div></div></div>
+        </div>;
+      })}
       <div className="chest-base" aria-hidden="true" />
     </div>
   </section>;

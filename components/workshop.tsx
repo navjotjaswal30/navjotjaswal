@@ -2,18 +2,19 @@
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, AudioLines, BookOpen, Cable, ClipboardList, Cpu, Gauge, LampDesk, PackageOpen, Pause, Play, Radar, X } from 'lucide-react';
-import { DisplayShelf, LeverMachine, MailPouch } from './workshop-fixtures';
-import { notes, type Project } from '../content/portfolio';
+import { ArrowLeft, ArrowRight, AudioLines, BookOpen, Cable, ClipboardList, Cpu, Gauge, PackageOpen, Pause, Play, Radar, X } from 'lucide-react';
+import { DisplayShelf, LeverMachine, ContactLinks } from './workshop-fixtures';
+import { type Project } from '../content/portfolio';
 import { ToolChest } from './tool-chest';
+import { MakersNotebook, PendantLight } from './landing-fixtures';
 
-export type Station = { id: string; title: string; content: ReactNode };
 const cargoIcons = [BookOpen, ClipboardList, AudioLines, Radar];
 const cargoNouns = ['Research dossier', 'Academic assistant', 'Lecture companion', 'Dispatch console'];
 
-export function Workshop({ projects, studies, stations }: { projects: Project[]; studies: ReactNode[]; stations: Station[] }) {
+export function Workshop({ projects, studies }: { projects: Project[]; studies: ReactNode[] }) {
   const [running, setRunning] = useState(true);
-  const [lamp, setLamp] = useState(true);
+  const [leftLight, setLeftLight] = useState(true);
+  const [rightLight, setRightLight] = useState(true);
   const [hovered, setHovered] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [reduced, setReduced] = useState(false);
@@ -113,26 +114,23 @@ export function Workshop({ projects, studies, stations }: { projects: Project[];
     else setActive(null);
   }
 
-  return <main id="main" className={'workshop ' + (lamp ? 'lamp-on' : 'lamp-off')}>
+  return <main id="main" className="workshop">
     <header className="room-header">
       <Link className="room-brand" href="/"><span><Cable size={18} /></span> Navjot Jaswal</Link>
       <p>Engineering <b>×</b> Product</p>
       <span className="room-header-location">Toronto, Canada</span>
     </header>
 
-    <div className="room">
+    <div className="room" data-left-lit={leftLight} data-right-lit={rightLight}>
       <section className="landing-workbench" aria-label="Introducing Navjot Jaswal">
         <div className="landing-sign">
           <p className="zone-label">The Idea Factory</p>
           <h1>Navjot <em>Jaswal</em></h1>
           <p className="landing-tagline">I turn “what if?” into “what’s next.”</p>
         </div>
-        <aside className="maker-notebook" aria-labelledby="notes-title">
-          <p className="zone-label" id="notes-title">Maker’s notes</p>
-          <p>I’m a Computer Engineering student at Toronto Metropolitan University. I like building where technology meets the way people actually do things.</p>
-          {notes.slice(0, 3).map(([title, content]) => <details key={title}><summary>{title}</summary><p>{content}</p></details>)}
-        </aside>
-        <button className="landing-lamp" type="button" aria-label="Workshop lamp" aria-pressed={lamp} onClick={() => setLamp(!lamp)}><LampDesk size={25} strokeWidth={1.4} /></button>
+        <MakersNotebook />
+        <PendantLight side="left" on={leftLight} toggle={() => setLeftLight(value => !value)} />
+        <PendantLight side="right" on={rightLight} toggle={() => setRightLight(value => !value)} />
       </section>
 
       <section className="conveyor" aria-label="Project conveyor">
@@ -222,18 +220,18 @@ export function Workshop({ projects, studies, stations }: { projects: Project[];
         <div className="zone-heading"><div><p className="zone-label">Workshop playground</p><h2 id="machine-title">Idea Machine.</h2><p>Pull the lever for a question about products, people, or everyday problems.</p></div></div>
         <LeverMachine />
       </section>
-      <section className="workshop-zone mail-zone" aria-label="Contact"><div><p className="zone-label">Get in touch</p><h2>Outgoing mail.</h2></div><MailPouch open={station} /></section>
+      <section className="workshop-zone mail-zone" aria-labelledby="contact-title"><h2 id="contact-title">Get in touch.</h2><ContactLinks /></section>
 
       <noscript><div className="room-floor">{projects.map(project => <a key={project.slug} href={'/work/' + project.slug + '/'}>{project.name}</a>)}</div></noscript>
       <footer className="room-floor"><span>Toronto, Canada</span><span>Navjot Jaswal · Toronto Metropolitan University</span></footer>
     </div>
 
-    {[...stations, ...projects.map((project, i) => ({ id: project.slug, title: project.name, content: studies[i] }))].map(({ id, title, content }) =>
+    {projects.map(({ slug: id, name: title }, i) =>
       <dialog key={id} className="case-dialog workshop-dialog" aria-label={title}
         ref={node => { if (node) dialogs.current.set(id, node); else dialogs.current.delete(id); }}
         onCancel={event => { event.preventDefault(); close(); }}>
         <div className="dialog-bar"><span>{title}</span><button type="button" onClick={close}><X size={19} /> Back to workshop</button></div>
-        {content}
+        {studies[i]}
       </dialog>
     )}
   </main>;

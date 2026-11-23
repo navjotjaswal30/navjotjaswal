@@ -1,10 +1,8 @@
 'use client';
 
-import { useRef, useState, type MouseEvent } from 'react';
-import { Copy, Mail, Send } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { BriefcaseBusiness, Camera, Copy, Mail } from 'lucide-react';
 import { awards, contact, prompts } from '../content/portfolio';
-
-type OpenStation = (id: string, target: HTMLElement) => void;
 
 export function DisplayShelf() {
   const [selected, setSelected] = useState<number | null>(null);
@@ -65,17 +63,10 @@ export function LeverMachine() {
   </section>;
 }
 
-export function MailPouch({ open }: { open: OpenStation }) {
-  const [unsealed, setUnsealed] = useState(false);
-  function guestbook(event: MouseEvent<HTMLButtonElement>) {
-    open('contact', event.currentTarget);
-  }
-  return <section className={'mail-pouch ' + (unsealed ? 'mail-open' : '')} aria-label="Outgoing mail">
-    <button className="mail-flap" type="button" aria-expanded={unsealed} aria-controls="mail-links" onClick={() => setUnsealed(!unsealed)}><Mail size={17} /> Outgoing mail</button>
-    <div className="mail-paper" id="mail-links" inert={!unsealed}><div>
-      <a href={'mailto:' + contact.email}><Send size={14} /> Email</a>
-      <a href={contact.linkedin}>LinkedIn</a><a href={contact.github}>GitHub</a>
-      <button type="button" onClick={guestbook}>Guestbook</button>
-    </div></div>
-  </section>;
+export function ContactLinks() {
+  return <div className="workshop-contact-links">
+    <a href={'mailto:' + contact.email}><Mail size={19} /><span><strong>Email</strong>{contact.email}</span></a>
+    <a href={contact.linkedin}><BriefcaseBusiness size={19} /><span><strong>LinkedIn</strong>Navjot Jaswal</span></a>
+    <a href="https://www.instagram.com/navjotjaswal_/"><Camera size={19} /><span><strong>Instagram</strong>@navjotjaswal_</span></a>
+  </div>;
 }
