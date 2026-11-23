@@ -1,0 +1,119 @@
+.workshop{--wall:#e7dec4;--line:#a19777;--steel:#263b30;--signal:#b74725;min-height:100svh;background:#eee5cf;color:#263b30}
+.room-header{min-height:62px;border-bottom:1px solid #b9ae91;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px clamp(14px,4vw,57px);background:#f5efdf;font-size:.88rem;font-weight:700}
+.room-brand,.room-header button{display:inline-flex;gap:9px;align-items:center}
+.room-brand>span{display:grid;place-items:center;background:#2b4436;color:#f3e7ce;border-radius:5px;width:32px;height:32px}
+.room-header p{font:500 .72rem var(--mono);text-transform:uppercase;letter-spacing:.09em}
+.room-header p b{color:#a64025}
+.room-header button,.room-fixtures button,.tools button,.belt-buttons button{color:inherit}
+.room-header button{background:transparent;border:1px solid #b5aa8f;border-radius:4px;padding:7px 11px}
+.room-header button:hover{background:#e7dcc0}
+.room{position:relative;isolation:isolate;min-height:calc(100svh - 62px);display:flex;flex-direction:column;background-color:var(--wall);background-image:linear-gradient(90deg,#5c512310 1px,transparent 1px),linear-gradient(#5c512310 1px,transparent 1px);background-size:45px 45px;transition:background-color .35s}
+.lamp-off{--wall:#c9c3ad}
+.room-wall{position:relative;flex:1;display:grid;grid-template-columns:minmax(190px,250px) minmax(0,1fr) minmax(130px,195px);gap:24px;align-items:center;min-height:330px;padding:28px clamp(18px,5vw,76px) 22px}
+.room-wall::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 78% 26%,#fff5c9bb,transparent 67%);transition:opacity .35s;z-index:-1}
+.lamp-off .room-wall::before{opacity:0}
+.wall-socket{position:absolute;right:0;top:18px;width:12%;height:14px;border:2px solid #847c61;border-right:0;border-radius:12px 0 0 12px;opacity:.65;pointer-events:none}
+.pegboard{padding:11px;background-color:#bfa87b;background-image:radial-gradient(#67593865 1.2px,transparent 1.5px);background-size:12px 12px;border:1px solid #77694d;border-radius:6px;box-shadow:4px 6px 0 #78674947,inset 0 0 0 3px #d2bc90}
+.pegboard-title{display:flex;justify-content:space-between;align-items:center;background:#e9d7ad;padding:5px 7px;margin-bottom:8px;border:1px solid #8a7b5a;font:500 .67rem var(--mono);text-transform:uppercase;letter-spacing:.045em}
+.tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.tools button{display:grid;place-items:center;align-content:center;gap:4px;min-height:61px;background:#f4e9ca;border:1px solid #8b7d5c;border-radius:3px;font-size:.74rem;font-weight:700;line-height:1.15;box-shadow:2px 3px 0 #6d60484d;transition:transform .18s,background .18s;padding:5px}
+.tools button:nth-child(even){background:#e3e6c7}
+.tools button:hover,.wall-note:hover{transform:translateY(-3px);background:#fff4d7}
+.tools button:active,.belt-buttons button:active{transform:translateY(2px)}
+.room-sign{text-align:center;align-self:center}
+.sign-top{display:flex;align-items:center;justify-content:center;gap:10px;font:500 .7rem/1.3 var(--mono);text-transform:uppercase;letter-spacing:.115em}
+.sign-top span{width:18px;height:1px;background:#9b6a4c}
+.room-sign h1{font-size:clamp(6rem,10vw,10.2rem);line-height:.77;letter-spacing:-.045em;margin:17px 0 13px}
+.room-sign h1 em{color:#a54127}
+.room-sign p{font-size:clamp(.88rem,1.35vw,1.08rem);font-weight:600;color:#405043}
+.room-fixtures{display:grid;justify-items:center;gap:12px}
+.desk-lamp{display:grid;place-items:center;gap:3px;border:0;background:transparent;font:500 .67rem/1.3 var(--mono);text-transform:uppercase;padding:4px}
+.desk-lamp svg{filter:drop-shadow(4px 3px 0 #9d87634d);transition:transform .2s,color .2s}
+.desk-lamp[aria-pressed=true] svg{color:#986021}
+.desk-lamp:hover svg{transform:rotate(-10deg)}
+.wall-note{position:relative;display:flex;align-items:flex-start;gap:6px;padding:13px 9px;background:#e8c77e;border:1px solid #b49760;box-shadow:3px 5px 0 #6d604833;font:italic 1.7rem/.99 var(--serif);text-align:left;transform:rotate(6deg);transition:transform .2s,background .2s}
+.wall-note::before{content:'';position:absolute;top:-5px;left:45%;width:9px;height:9px;background:#9b4329;border:1px solid #723120;border-radius:50%}
+.wall-note svg:last-child{align-self:end}
+.conveyor{margin-top:auto}
+.belt-heading{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:9px clamp(16px,5vw,76px);border-block:1px solid #a2997e;background:#eae0c5}
+.belt-heading h2,.belt-heading p{display:flex;align-items:center;gap:8px;font:500 .77rem/1.4 var(--mono)}
+.belt-heading h2{text-transform:uppercase;letter-spacing:.06em}
+.belt-window{position:relative;overflow:hidden;touch-action:pan-y;cursor:grab;user-select:none;padding-top:18px;background:linear-gradient(180deg,#605a3422,transparent 65%)}
+.belt-window:active{cursor:grabbing}
+.cargo-track{position:relative;height:clamp(150px,21vh,209px);--cargo-pitch:calc((100% - 36px)/4);-webkit-user-drag:none}
+.cargo{position:absolute;left:0;bottom:0;width:clamp(160px,19vw,262px);transform:translateX(var(--cargo-x,calc(18px + var(--cargo-index) * max(188px,var(--cargo-pitch)))));display:grid;grid-template-rows:1fr 15px;gap:0;height:90%;-webkit-user-drag:none}
+.cargo-object{position:relative;margin:0 6px;padding:8px 13px 7px;border:1px solid var(--art-ink);border-radius:7px 7px 4px 4px;background:var(--art);color:var(--art-ink);box-shadow:inset -7px -6px 0 #332c2320,4px 1px 0 #34332336;display:flex;align-items:flex-start;justify-content:flex-end;flex-direction:column;transition:transform .2s,filter .2s}
+.cargo:hover .cargo-object,.cargo:focus-visible .cargo-object{filter:brightness(1.09);transform:translateY(-7px)}
+.cargo-rivet{position:absolute;right:13px;top:12px;width:8px;height:8px;border:1px solid currentColor;border-radius:50%;opacity:.65}
+.cargo-model{position:absolute;top:10px;left:12px;display:grid;place-items:center;width:53px;height:48px;background:var(--mock);border:1px solid currentColor;border-radius:4px;box-shadow:3px 3px 0 #332c2338}
+.cargo-model svg{width:34px}
+.cargo strong{font:400 clamp(1.75rem,3.1vw,3.25rem)/.95 var(--serif);white-space:nowrap}
+.cargo-noun{font:500 clamp(.58rem,1vw,.69rem)/1.2 var(--mono);text-transform:uppercase;letter-spacing:.025em;margin-bottom:4px}
+.cargo-pallet{border:1px solid #5b432a;border-radius:2px;background:repeating-linear-gradient(90deg,#9f764b 0 23px,#69472e 24px 26px,#b28c5e 27px 29px);box-shadow:0 4px 0 #443a26}
+.belt-tread{position:relative;height:21px;border-block:3px solid #26342b;background:repeating-linear-gradient(100deg,#677363 0 11px,#39483a 12px 16px,#566450 17px 30px);background-position:var(--belt-offset,0) 0}
+.belt-chassis{height:32px;border-block:2px solid #233629;background:#405845;display:flex;justify-content:space-around;align-items:center;box-shadow:inset 0 -6px 0 #233629}
+.belt-chassis i{width:15px;height:15px;border-radius:50%;background:#84927b;border:3px solid #2c4133;box-shadow:0 0 0 1px #a2a88a}
+.belt-footer{min-height:65px;background:#273c30;color:#f1e8cd;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:8px clamp(16px,5vw,76px);border-bottom:5px solid #1e2d24}
+.belt-status,.inventory-count{display:flex;align-items:center;gap:7px;font:500 .72rem/1.3 var(--mono);text-transform:uppercase}
+.belt-status span{width:8px;height:8px;border-radius:50%;background:#b47c60}
+.belt-status span.motor-live{background:#b4cb85;box-shadow:0 0 8px #c5e29c7b}
+.inventory-count{justify-self:end}
+.belt-buttons{display:flex;gap:5px}
+.belt-buttons button{display:flex;align-items:center;justify-content:center;gap:7px;background:#405547;border:1px solid #7e8d74;border-radius:4px;min-width:43px;min-height:42px;box-shadow:0 3px 0 #18291d}
+.belt-buttons .motor-button{padding:0 11px;background:#a33f25;border-color:#d08258;font-weight:700;min-width:92px}
+.belt-buttons button:hover{filter:brightness(1.2)}
+.belt-buttons button:disabled{opacity:.6;cursor:default}
+.room-floor{background:#ddd0ad;border-top:1px solid #9d8e6c;display:flex;justify-content:space-between;gap:10px;padding:14px clamp(16px,5vw,76px);min-height:52px;font:500 .68rem/1.4 var(--mono)}
+.workshop-dialog[open]{animation:station-open .24s ease-out both}
+.workshop-dialog::backdrop{background:#202d24b5;backdrop-filter:blur(3px)}
+.workshop-dialog .dialog-bar{justify-content:space-between;align-items:center;gap:8px;padding:9px 15px;background:#ede4cc}
+.workshop-dialog .dialog-bar>span{font:500 .73rem var(--mono);text-transform:uppercase}
+.station-content{padding:clamp(20px,5vw,58px)}
+.station-content>p{margin-top:15px;max-width:65ch}
+.station-machine .idea-console{margin-top:25px;max-width:650px}
+.guest-drawer{margin-top:28px;border-top:1px solid #b5ab91;padding-top:13px;max-width:540px}
+.guest-drawer summary{cursor:pointer;font-weight:700}
+.guest-drawer .guest-form{margin-top:10px}
+@keyframes station-open{from{opacity:.4;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+@media(max-width:860px){
+ .room-wall{grid-template-columns:minmax(150px,185px) minmax(0,1fr) 98px;gap:15px;padding-inline:22px}
+ .room-sign h1{font-size:clamp(4.7rem,12vw,7.3rem)}
+ .wall-note{font-size:1.32rem}
+ .wall-note svg:last-child{display:none}
+}
+@media(max-width:560px){
+ .room-header p{display:none}
+ .room-wall{grid-template-columns:minmax(0,1fr) 60px;gap:14px;padding:22px 13px 16px}
+ .room-sign{grid-column:1;grid-row:1;text-align:left}
+ .sign-top{justify-content:flex-start;font-size:.59rem;gap:5px}
+ .sign-top span{width:10px}
+ .room-sign h1{font-size:clamp(4.4rem,18vw,6rem);margin:12px 0}
+ .room-fixtures{grid-column:2;grid-row:1}
+ .desk-lamp svg{width:42px}
+ .wall-note{display:none}
+ .pegboard{grid-column:1/-1;padding:6px}
+ .pegboard-title{margin-bottom:4px;padding:3px 5px}
+ .tools{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+ .tools button{min-height:39px;font-size:.64rem;padding:2px;gap:1px}
+ .tools button svg{width:17px;height:17px}
+ .belt-heading{flex-direction:column;align-items:flex-start;padding-block:6px}
+ .belt-heading p{font-size:.66rem}
+ .belt-window{padding-top:9px}
+ .cargo-track{height:140px}
+ .belt-chassis{height:23px}
+ .belt-chassis i:nth-child(even){display:none}
+ .inventory-count{display:none}
+ .belt-footer{grid-template-columns:1fr auto;min-height:57px}
+ .room-floor{font-size:.6rem;min-height:39px;padding-block:7px}
+ .workshop-dialog .dialog-bar>span{font-size:.65rem}
+}
+.cargo-hardware{position:absolute;top:16px;right:34px;display:flex;gap:4px}
+.cargo-hardware i{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.4}
+.cargo.notion .cargo-object{border-radius:4px 12px 4px 4px;background:repeating-linear-gradient(0deg,#2d473b12 0 1px,transparent 1px 9px),var(--art)}
+.cargo.notion .cargo-model{transform:rotate(-7deg);border-radius:1px 4px 4px 1px}
+.cargo.study .cargo-object{border-radius:11px 11px 4px 4px;background:linear-gradient(125deg,#f7e8d4,var(--art) 68%)}
+.cargo.study .cargo-model{width:65px;border:3px solid var(--art-ink);box-shadow:0 4px 0 #332c2338}
+.cargo.catch .cargo-object{border-radius:16px 16px 5px 5px;background:linear-gradient(135deg,#ecf0e7,var(--art) 60%)}
+.cargo.catch .cargo-model{border-radius:20px}
+.cargo.shift .cargo-object{background:repeating-linear-gradient(135deg,#7a69331b 0 2px,transparent 2px 7px),var(--art)}
+.cargo.shift .cargo-model{border-radius:50%;background:#455844;color:#e5edca}

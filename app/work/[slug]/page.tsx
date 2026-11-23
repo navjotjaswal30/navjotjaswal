@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { projects } from '../../../content/portfolio';
-import { Header } from '../../../components/interactive';
 import { CaseStudy } from '../../../components/projects';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -24,5 +23,5 @@ export default async function ProjectPage({ params }: Props) {
   const { slug } = await params;
   const project = projects.find(entry => entry.slug === slug);
   if (!project) notFound();
-  return <><Header /><main id="main" className="wrap standalone-case"><Link href="/#work" className="back-link"><ArrowLeft size={17} /> Back to selected work</Link><CaseStudy project={project} standalone /></main></>;
+  return <main id="main" className="wrap standalone-case"><Link href="/" className="back-link"><ArrowLeft size={17} /> Back to the workshop</Link><CaseStudy project={project} standalone /></main>;
 }

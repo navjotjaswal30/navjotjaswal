@@ -1,6 +1,6 @@
 # Navjot Jaswal · The Idea Factory
 
-A personal portfolio built with the Next.js App Router, React, and TypeScript. The production build exports a static homepage and four individually addressable case studies. Product Thinking Mode saves the visitor’s preference locally.
+A personal portfolio built with the Next.js App Router, React, and TypeScript. The production build exports an interactive workshop and four individually addressable case studies. On the workshop floor, visitors can pause, drag, or step the conveyor and open projects or wall stations. The conveyor starts stopped for visitors who prefer reduced motion. Product Thinking Mode saves the visitor’s preference locally.
 
 ## Run locally
 
@@ -29,7 +29,7 @@ Import this repository in Vercel and select the Next.js preset. Set `SITE_URL` i
 
 - Edit project stories, external links, experience, awards, pinboard notes, idea prompts, and contact information in `content/portfolio.ts`.
 - Replace `public/resume.pdf` with the current résumé and update the index card in `app/page.tsx` if its labels change.
-- Add a headshot to `public/images/`, then replace the monogram in the about section of `app/page.tsx` with an image and descriptive alt text.
+- Add a headshot to `public/images/`, then include it with descriptive alt text in the Maker’s notes station in `app/page.tsx`.
 - Add verified screenshots under `public/images/projects/` and update `ProjectVisual` in `components/projects.tsx`. The illustrations currently shown are explicitly labelled as concepts.
 - Replace `public/social.png` to update the social preview.
 
