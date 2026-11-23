@@ -35,4 +35,4 @@ Import this repository in Vercel and select the Next.js preset. Set `SITE_URL` i
 
 ## Guestbook
 
-The notebook guest page saves a draft in the visitor’s browser and opens their email app if they choose to send it. The static site has no shared notes database.
+The notebook saves drafts in the visitor’s browser. Signed notes are stored in the Sites D1 database and displayed to visitors with Site access. To build the deployed Worker, run `npm run build:sites` on Node.js 24. The static export alone serves the portfolio and has no guestbook API.
