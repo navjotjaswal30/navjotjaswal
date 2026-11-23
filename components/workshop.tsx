@@ -124,24 +124,7 @@ export function Workshop({ projects, studies, portrait }: { projects: Project[];
           <p className="landing-tagline">I turn “what if?” into “what’s next.”</p>
         </div>
         <div className="notebook-station">
-          <button type="button" className="closed-notebook" aria-expanded={notebookOpen} aria-controls="landing-notebook" hidden={notebookOpen}
-            onClick={() => {
-              setNotebookOpen(true);
-              requestAnimationFrame(() => document.getElementById('close-landing-notebook')?.focus({ preventScroll: true }));
-            }} id="open-landing-notebook">
-            <span className="closed-notebook-title">Maker’s<br />Notes</span><span className="closed-notebook-action">Open notebook</span>
-          </button>
-          <div id="landing-notebook" className="notebook-open-spread" hidden={!notebookOpen}>
-            <MakersNotebook />
-            {notebookOpen && <div className="notebook-opening-cover" aria-hidden="true">
-              <div className="notebook-cover-face"><span className="closed-notebook-title">Maker’s<br />Notes</span></div>
-              <div className="notebook-cover-lining" />
-            </div>}
-            <button type="button" id="close-landing-notebook" className="close-notebook" onClick={() => {
-              setNotebookOpen(false);
-              requestAnimationFrame(() => document.getElementById('open-landing-notebook')?.focus({ preventScroll: true }));
-            }}>Close notebook</button>
-          </div>
+          <MakersNotebook open={notebookOpen} onOpenChange={setNotebookOpen} />
         </div>
         <PendantLight side="left" on={leftLight} toggle={() => setLeftLight(value => !value)} />
         <PendantLight side="right" on={rightLight} toggle={() => setRightLight(value => !value)} />

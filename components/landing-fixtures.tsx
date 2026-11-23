@@ -13,7 +13,28 @@ const pages = [
 type Direction = -1 | 1;
 type PageTurn = { from: number; direction: Direction; progress: number; released: boolean; complete: boolean; id: number };
 
-export function MakersNotebook() {
+export function MakersNotebook({ open, onOpenChange }: { open: boolean; onOpenChange: (value: boolean) => void }) {
+  const [coverSettled, setCoverSettled] = useState(false);
+  const cover = useRef<HTMLButtonElement>(null);
+  const close = useRef<HTMLButtonElement>(null);
+  const pagesReady = open && coverSettled;
+
+  function openBook() {
+    if (open) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) settleCover();
+    onOpenChange(true);
+  }
+
+  function settleCover() {
+    setCoverSettled(true);
+    requestAnimationFrame(() => close.current?.focus({ preventScroll: true }));
+  }
+
+  function closeBook() {
+    setCoverSettled(false);
+    onOpenChange(false);
+    requestAnimationFrame(() => cover.current?.focus({ preventScroll: true }));
+  }
   const [page, setPage] = useState(0);
   const [autoFlip, setAutoFlip] = useState(false);
   const [turn, setTurn] = useState<PageTurn | null>(null);
@@ -83,18 +104,18 @@ export function MakersNotebook() {
   const angle = turn ? -turn.direction * turn.progress * 165 : 0;
   const destination = turn?.complete ? -turn.direction * 165 : 0;
   const onGuestPage = page === pages.length - 1;
-  return <aside className="flip-notebook" aria-labelledby="notes-title" data-pen-moving={autoFlip || onGuestPage}>
-    {!onGuestPage && <button className="notebook-pen" type="button" aria-label="Pick up the pen and turn to the guest page" onClick={() => setAutoFlip(true)} disabled={autoFlip}><span aria-hidden="true" /></button>}
-    <div className="notebook-spread">
-      <div className="notebook-leaf notebook-left">
+  return <aside className="flip-notebook" aria-label="Maker’s Notes" data-cover-open={open} data-cover-settled={pagesReady} data-pen-moving={autoFlip || onGuestPage}>
+    {!onGuestPage && <button className="notebook-pen" type="button" aria-label="Pick up the pen and turn to the guest page" onClick={() => setAutoFlip(true)} disabled={autoFlip || !pagesReady}><span aria-hidden="true" /></button>}
+    <div className="notebook-spread" id="landing-notebook">
+      <div className="notebook-leaf notebook-left" inert={!pagesReady}>
         <span className="zone-label">The Idea Factory</span>
         <span>{page === 0 ? <>Field notes<br />from Navjot</> : pages[page - 1][0]}</span>
         {corner(-1)}
       </div>
-      <div className="notebook-leaf notebook-right" ref={leaf}>
+      <div className="notebook-leaf notebook-right" ref={leaf} inert={!pagesReady}>
         <p className="zone-label" id="notes-title">Maker’s Notes</p>
         <div className="notebook-copy">{onGuestPage
-          ? <NotebookGuestbook ready={!turn} />
+          ? <NotebookGuestbook ready={pagesReady && !turn} />
           : <><h2>{pages[displayed][0]}</h2><p>{pages[displayed][1]}</p></>}</div>
         {corner(1)}
       </div>
@@ -104,8 +125,16 @@ export function MakersNotebook() {
           <p className="zone-label">Maker’s Notes</p><h2>{pages[turn.direction > 0 ? turn.from : turn.from - 1][0]}</h2><p>{pages[turn.direction > 0 ? turn.from : turn.from - 1][1]}</p>
         </div>)}
       </div>}
+      <button type="button" className="notebook-hinged-cover" ref={cover} aria-expanded={open} aria-controls="landing-notebook"
+        tabIndex={open ? -1 : undefined} onClick={openBook} onAnimationEnd={event => {
+          if (event.target === event.currentTarget && open) settleCover();
+        }}>
+        <span className="notebook-cover-face"><span className="closed-notebook-title">Maker’s<br />Notes</span><span className="closed-notebook-action">Open notebook</span></span>
+        <span className="notebook-cover-lining" aria-hidden="true" />
+      </button>
     </div>
-    <p className="notebook-folio" aria-live="polite">Page {page + 1} of {pages.length}</p>
+    <p className="notebook-folio" aria-live={pagesReady ? 'polite' : 'off'}>Page {page + 1} of {pages.length}</p>
+    <button type="button" className="close-notebook" ref={close} disabled={!pagesReady} onClick={closeBook}>Close notebook</button>
   </aside>;
 }
 
