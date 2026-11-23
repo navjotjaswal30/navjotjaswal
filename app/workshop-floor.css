@@ -73,8 +73,6 @@
 .idea-zone .lever-arm i{width:26px;height:26px}
 .idea-zone .lever-arm::before{inset:11px 8px 0}
 .idea-zone .lever-label{bottom:12px;font-size:.82rem}
-.idea-zone .paper-output{padding:13px}
-.idea-zone .paper-output p{font-size:clamp(1.35rem,3vw,2rem)}
 .mail-zone{background:#eee3c8}
 .mail-zone .mail-flap{min-height:54px;font-size:.96rem}
 .mail-zone .mail-paper a,.mail-zone .mail-paper button{padding:5px 7px;font-size:.81rem}

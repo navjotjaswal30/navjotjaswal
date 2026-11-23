@@ -167,10 +167,6 @@
 .lever-label{position:absolute;bottom:1px;left:0;right:0;font:500 .64rem var(--mono);text-transform:uppercase}
 @keyframes pull-lever{50%{transform:rotate(94deg)}}
 .machine-output{position:relative;z-index:1}
-.paper-output{margin:-9px 11px 0;display:grid;grid-template-columns:1fr auto;gap:2px;align-items:start;padding:8px 5px 6px;background:#f7edcd;border:1px solid #ac9c75;box-shadow:2px 3px 0 #7c694840;transform-origin:top;animation:dispense .32s ease-out}
-.paper-output p{font:1.13rem/1.03 var(--serif);color:#293b2e}
-.paper-output button{display:grid;place-items:center;min-width:23px;min-height:23px;background:none;border:1px solid #b5a47d;border-radius:2px;color:#304635;font-size:.66rem}
-@keyframes dispense{from{transform:scaleY(0);opacity:.3}to{transform:none;opacity:1}}
 .mail-pouch{position:relative;margin:3px 3px 0;background:#dbbb8a;border:1px solid #92734f;border-radius:4px;box-shadow:3px 3px 0 #775f433f}
 .mail-flap{width:100%;display:flex;justify-content:center;align-items:center;gap:7px;background:linear-gradient(165deg,#ebd3ad 49%,#d4b180 50%);border:0;padding:7px 3px;font-size:.76rem;font-weight:700;transition:background .2s}
 .mail-flap:hover,.mail-open .mail-flap{background:#e9d2aa}

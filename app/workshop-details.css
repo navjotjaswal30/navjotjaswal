@@ -73,3 +73,21 @@
 .turning-leaf.backward-leaf{left:0;right:auto;width:43.18%;transform-origin:right center}
 .turning-leaf[data-released=true]{animation:finish-leaf .42s cubic-bezier(.2,.65,.24,1) both}
 @keyframes finish-leaf{from{transform:rotateY(var(--turn-angle))}to{transform:rotateY(var(--turn-end))}}
+
+.idea-zone .machine-housing{min-height:0;padding-bottom:18px}
+.machine-display strong{color:#ffdf78;animation:receipt-confirm .8s ease-in-out 2}
+@keyframes receipt-confirm{0%,100%{opacity:1}50%{opacity:.4}}
+.machine-slot{position:relative;z-index:2;box-shadow:0 2px 0 #b8c1a7,inset 0 4px 0 #182c22}
+.idea-zone .machine-output{margin:-21px 98px 0 27px}
+.machine-receipt{position:relative;z-index:1;background:#f8efd4;color:#293b2e;border:1px solid #baa77f;border-top:0;filter:drop-shadow(2px 4px 0 #79614745);transform-origin:top;animation:receipt-print .55s ease-out both}
+.machine-receipt::after{content:'';position:absolute;bottom:-5px;left:-1px;right:-1px;height:6px;background:linear-gradient(135deg,#f8efd4 50%,transparent 0) 0 0 / 10px 6px repeat-x,linear-gradient(225deg,#f8efd4 50%,transparent 0) 0 0 / 10px 6px repeat-x;pointer-events:none}
+.machine-receipt p{padding:0 12px 11px;color:#293b2e;font:clamp(1.2rem,2.5vw,1.8rem)/1.1 var(--serif)}
+.receipt-perforation{position:relative;display:block;width:100%;height:32px;touch-action:none;cursor:grab;background:none;border:0;padding:0;color:#664629;--tear-progress:0}
+.receipt-perforation:active{cursor:grabbing}
+.receipt-perforation::before,.receipt-perforation::after{content:'';position:absolute;top:50%;left:7px;right:7px;border-top:2px dotted #917b53}
+.receipt-perforation::after{right:auto;width:calc((100% - 14px) * var(--tear-progress));border-top:2px solid #846c48}
+.receipt-perforation svg{position:absolute;z-index:1;top:50%;left:calc(8px + (100% - 35px) * var(--tear-progress));transform:translateY(-50%);background:#f8efd4}
+.machine-receipt[data-torn=true]{pointer-events:none;animation:receipt-fall .62s ease-in both}
+.machine-receipt[data-torn=true] p{padding-top:32px}
+@keyframes receipt-print{from{clip-path:inset(0 0 100% 0);transform:translateY(-5px)}to{clip-path:inset(0 -8px -8px -8px);transform:none}}
+@keyframes receipt-fall{0%{opacity:1;transform:none}28%{opacity:.9;transform:translate(3px,11px) rotate(2deg)}100%{opacity:0;transform:translate(18px,68px) rotate(12deg)}}
