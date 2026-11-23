@@ -1,11 +1,13 @@
 'use client';
 
-import { useRef, useState, type CSSProperties, type PointerEvent } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { notes } from '../content/portfolio';
+import { NotebookGuestbook } from './notebook-guestbook';
 
 const pages = [
   ['A little about me', 'I’m a Computer Engineering student at Toronto Metropolitan University. I like building where technology meets the way people actually do things.'],
   ...notes.slice(0, 3),
+  ['Leave a note.', 'Write something here…'],
 ];
 
 type Direction = -1 | 1;
@@ -13,13 +15,31 @@ type PageTurn = { from: number; direction: Direction; progress: number; released
 
 export function MakersNotebook() {
   const [page, setPage] = useState(0);
+  const [autoFlip, setAutoFlip] = useState(false);
   const [turn, setTurn] = useState<PageTurn | null>(null);
   const gesture = useRef<{ id: number; x: number; width: number; direction: Direction; progress: number; moved: boolean } | null>(null);
   const leaf = useRef<HTMLDivElement>(null);
   const sequence = useRef(0);
 
+  useEffect(() => {
+    if (!autoFlip || page === pages.length - 1) return;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const timer = setTimeout(() => {
+      setTurn({ from: page, direction: 1, progress: 0, released: true, complete: true, id: ++sequence.current });
+      setPage(page + 1);
+      if (page + 1 === pages.length - 1) setAutoFlip(false);
+    }, reduced ? 25 : turn ? 480 : 50);
+    return () => clearTimeout(timer);
+  }, [autoFlip, page, turn]);
+
+  useEffect(() => {
+    if (!turn?.released) return;
+    const timer = setTimeout(() => setTurn(value => value?.id === turn.id ? null : value), 455);
+    return () => clearTimeout(timer);
+  }, [turn]);
+
   function start(event: PointerEvent<HTMLButtonElement>, direction: Direction) {
-    if (event.button !== 0 || gesture.current) return;
+    if (event.button !== 0 || gesture.current || autoFlip) return;
     gesture.current = { id: event.pointerId, x: event.clientX, width: leaf.current?.offsetWidth || 160, direction, progress: 0, moved: false };
     event.currentTarget.setPointerCapture(event.pointerId);
     setTurn({ from: page, direction, progress: 0, released: false, complete: false, id: ++sequence.current });
@@ -53,7 +73,7 @@ export function MakersNotebook() {
     const draggingThisCorner = turn?.direction === direction && !turn.released;
     return <button type="button" className="page-corner" data-direction={direction}
       aria-label={direction > 0 ? 'Turn to the next notebook page' : 'Turn to the previous notebook page'}
-      disabled={unavailable && !draggingThisCorner}
+      disabled={autoFlip || (unavailable && !draggingThisCorner)}
       onPointerDown={event => start(event, direction)}
       onPointerMove={move} onPointerUp={event => finish(event, false)} onLostPointerCapture={event => finish(event, true)}
       onClick={event => { if (event.detail === 0) viaKeyboard(direction); }} />;
@@ -62,7 +82,9 @@ export function MakersNotebook() {
   const displayed = turn && !turn.released && turn.direction > 0 ? turn.from + 1 : page;
   const angle = turn ? -turn.direction * turn.progress * 165 : 0;
   const destination = turn?.complete ? -turn.direction * 165 : 0;
-  return <aside className="flip-notebook" aria-labelledby="notes-title">
+  const onGuestPage = page === pages.length - 1;
+  return <aside className="flip-notebook" aria-labelledby="notes-title" data-pen-moving={autoFlip || onGuestPage}>
+    {!onGuestPage && <button className="notebook-pen" type="button" aria-label="Pick up the pen and turn to the guest page" onClick={() => setAutoFlip(true)} disabled={autoFlip}><span aria-hidden="true" /></button>}
     <div className="notebook-spread">
       <div className="notebook-leaf notebook-left">
         <span className="zone-label">The Idea Factory</span>
@@ -71,13 +93,16 @@ export function MakersNotebook() {
       </div>
       <div className="notebook-leaf notebook-right" ref={leaf}>
         <p className="zone-label" id="notes-title">Maker’s Notes</p>
-        <div className="notebook-copy"><h2>{pages[displayed][0]}</h2><p>{pages[displayed][1]}</p></div>
+        <div className="notebook-copy">{onGuestPage
+          ? <NotebookGuestbook ready={!turn} />
+          : <><h2>{pages[displayed][0]}</h2><p>{pages[displayed][1]}</p></>}</div>
         {corner(1)}
       </div>
-      {turn && <div className={'notebook-leaf turning-leaf ' + (turn.direction < 0 ? 'backward-leaf' : '')}
-        key={turn.id} aria-hidden="true" data-released={turn.released} style={{ '--turn-angle': angle + 'deg', '--turn-end': destination + 'deg' } as CSSProperties}
-        onAnimationEnd={() => setTurn(previous => previous?.id === turn.id ? null : previous)}>
-        <p className="zone-label">Maker’s Notes</p><h2>{pages[turn.direction > 0 ? turn.from : turn.from - 1][0]}</h2><p>{pages[turn.direction > 0 ? turn.from : turn.from - 1][1]}</p>
+      {turn && <div className={'paper-turn ' + (turn.direction < 0 ? 'paper-turn-back' : '')} key={turn.id} aria-hidden="true"
+        data-released={turn.released} style={{ '--turn-angle': angle + 'deg', '--turn-end': destination + 'deg' } as CSSProperties}>
+        {Array.from({ length: 8 }, (_, i) => <div className="notebook-leaf paper-curve" key={i} style={{ '--strip': i } as CSSProperties}>
+          <p className="zone-label">Maker’s Notes</p><h2>{pages[turn.direction > 0 ? turn.from : turn.from - 1][0]}</h2><p>{pages[turn.direction > 0 ? turn.from : turn.from - 1][1]}</p>
+        </div>)}
       </div>}
     </div>
     <p className="notebook-folio" aria-live="polite">Page {page + 1} of {pages.length}</p>

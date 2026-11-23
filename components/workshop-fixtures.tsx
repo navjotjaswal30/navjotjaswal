@@ -54,25 +54,25 @@ export function LeverMachine() {
     if (!gesture || event.pointerId !== gesture.id) return;
     const alongLine = Math.abs(event.clientY - gesture.baseline) <= 25;
     const progress = Math.max(0, Math.min(1, (event.clientX - gesture.left) / (gesture.target - gesture.left)));
-    event.currentTarget.style.setProperty('--tear-progress', alongLine ? String(progress) : '0');
+    event.currentTarget.closest<HTMLElement>('.machine-receipt')?.style.setProperty('--tear-progress', alongLine ? String(progress) : '0');
     return alongLine && progress >= 1;
   }
 
   function clearCut(event: PointerEvent<HTMLButtonElement>) {
     if (cut.current?.id !== event.pointerId) return;
     cut.current = null;
-    event.currentTarget.style.removeProperty('--tear-progress');
+    event.currentTarget.closest<HTMLElement>('.machine-receipt')?.style.removeProperty('--tear-progress');
   }
 
   const message = status === 'ready' ? 'Ready to dispense'
-    : status === 'copied' ? 'Prompt dispensed'
+    : status === 'copied' ? 'Prompt copied'
     : status === 'failed' ? 'Copy unavailable — try again'
     : 'Prompt dispensed — tear to copy';
   return <section className="lever-machine" aria-label="Idea Machine">
     <div className="machine-housing">
       <div className="machine-face">
         <span className="machine-name">Idea Machine</span>
-        <div className="machine-display" role="status"><i aria-hidden="true" /><span>{message}</span>{status === 'copied' && <strong>Prompt copied</strong>}</div>
+        <div className="machine-display" role="status"><i aria-hidden="true" /><span className={status === 'copied' ? 'machine-copied' : undefined}>{message}</span></div>
         <div className="machine-slot" aria-hidden="true" />
       </div>
       <button type="button" className="machine-lever" ref={lever} onClick={dispense} aria-label="Pull the lever to dispense an idea"

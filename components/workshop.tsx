@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import Link from 'next/link';
-import { ArrowLeft, ArrowRight, AudioLines, BookOpen, Cable, ClipboardList, Cpu, Gauge, PackageOpen, Pause, Play, Radar, X } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowLeft, ArrowRight, AudioLines, BookOpen, ClipboardList, Cpu, Gauge, PackageOpen, Pause, Play, Radar, X } from 'lucide-react';
 import { DisplayShelf, LeverMachine, ContactLinks } from './workshop-fixtures';
 import { type Project } from '../content/portfolio';
 import { ToolChest } from './tool-chest';
@@ -11,7 +11,7 @@ import { MakersNotebook, PendantLight } from './landing-fixtures';
 const cargoIcons = [BookOpen, ClipboardList, AudioLines, Radar];
 const cargoNouns = ['Research dossier', 'Academic assistant', 'Lecture companion', 'Dispatch console'];
 
-export function Workshop({ projects, studies }: { projects: Project[]; studies: ReactNode[] }) {
+export function Workshop({ projects, studies, portrait }: { projects: Project[]; studies: ReactNode[]; portrait?: string }) {
   const [running, setRunning] = useState(true);
   const [leftLight, setLeftLight] = useState(true);
   const [rightLight, setRightLight] = useState(true);
@@ -115,16 +115,10 @@ export function Workshop({ projects, studies }: { projects: Project[]; studies: 
   }
 
   return <main id="main" className="workshop">
-    <header className="room-header">
-      <Link className="room-brand" href="/"><span><Cable size={18} /></span> Navjot Jaswal</Link>
-      <p>Engineering <b>×</b> Product</p>
-      <span className="room-header-location">Toronto, Canada</span>
-    </header>
-
     <div className="room" data-left-lit={leftLight} data-right-lit={rightLight}>
       <section className="landing-workbench" aria-label="Introducing Navjot Jaswal">
-        <div className="landing-sign">
-          <p className="zone-label">The Idea Factory</p>
+        <div className={'landing-sign' + (portrait ? ' landing-sign-portrait' : '')}>
+          {portrait && <figure className="workshop-portrait"><Image src={portrait} alt="Navjot Jaswal" width={1125} height={1210} unoptimized priority /></figure>}
           <h1>Navjot <em>Jaswal</em></h1>
           <p className="landing-tagline">I turn “what if?” into “what’s next.”</p>
         </div>

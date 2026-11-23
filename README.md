@@ -29,10 +29,10 @@ Import this repository in Vercel and select the Next.js preset. Set `SITE_URL` i
 
 - Edit project stories, external links, experience, awards, pinboard notes, idea prompts, and contact information in `content/portfolio.ts`.
 - Replace `public/resume.pdf` with the current résumé and update the index card in `app/page.tsx` if its labels change.
-- Add a headshot to `public/images/`, then include it with descriptive alt text in the Maker’s notes station in `app/page.tsx`.
+- Place the portrait at `public/images/navjot-portrait.jpg` and rebuild to mount it in the landing-page frame.
 - Add verified screenshots under `public/images/projects/` and update `ProjectVisual` in `components/projects.tsx`. The illustrations currently shown are explicitly labelled as concepts.
 - Replace `public/social.png` to update the social preview.
 
 ## Guestbook
 
-The current guestbook displays a disabled form. To activate it, add a server endpoint or a separately hosted Supabase Edge Function and connect the form to it. Validate name and message length on the server, throttle requests, and store submissions as pending. Publish only moderated entries, render them as text, and keep privileged keys server-side. If running the endpoint in this Next.js project, switch from static export to a server-backed deployment first.
+The notebook guest page saves a draft in the visitor’s browser and opens their email app if they choose to send it. The static site has no shared notes database.
