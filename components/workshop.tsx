@@ -133,6 +133,10 @@ export function Workshop({ projects, studies, portrait }: { projects: Project[];
           </button>
           <div id="landing-notebook" className="notebook-open-spread" hidden={!notebookOpen}>
             <MakersNotebook />
+            {notebookOpen && <div className="notebook-opening-cover" aria-hidden="true">
+              <div className="notebook-cover-face"><span className="closed-notebook-title">Maker’s<br />Notes</span></div>
+              <div className="notebook-cover-lining" />
+            </div>}
             <button type="button" id="close-landing-notebook" className="close-notebook" onClick={() => {
               setNotebookOpen(false);
               requestAnimationFrame(() => document.getElementById('open-landing-notebook')?.focus({ preventScroll: true }));
