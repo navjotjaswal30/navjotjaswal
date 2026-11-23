@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, AudioLines, BookOpen, Cable, ClipboardList, Cpu, Gauge, LampDesk, PackageOpen, Pause, Play, Radar, X } from 'lucide-react';
-import { DisplayShelf, LeverMachine, MailPouch, ToolCabinet } from './workshop-fixtures';
-import { type Project } from '../content/portfolio';
+import { DisplayShelf, LeverMachine, MailPouch } from './workshop-fixtures';
+import { notes, type Project } from '../content/portfolio';
+import { ToolChest } from './tool-chest';
 
 export type Station = { id: string; title: string; content: ReactNode };
 const cargoIcons = [BookOpen, ClipboardList, AudioLines, Radar];
@@ -120,23 +121,19 @@ export function Workshop({ projects, studies, stations }: { projects: Project[];
     </header>
 
     <div className="room">
-      <div className="room-wall">
-        <div className="wall-socket" aria-hidden="true" />
-        <ToolCabinet open={station} />
-        <div className="room-center">
-          <div className="room-sign">
-            <div className="sign-top"><span /> The Idea Factory <span /></div>
-            <h1>Navjot<br /> <em>Jaswal</em></h1>
-            <p>I turn “what if?” into “what’s next.”</p>
-          </div>
-          <DisplayShelf />
+      <section className="landing-workbench" aria-label="Introducing Navjot Jaswal">
+        <div className="landing-sign">
+          <p className="zone-label">The Idea Factory</p>
+          <h1>Navjot <em>Jaswal</em></h1>
+          <p className="landing-tagline">I turn “what if?” into “what’s next.”</p>
         </div>
-        <div className="room-fixtures">
-          <button className="desk-lamp" type="button" aria-label="Workshop lamp" aria-pressed={lamp} onClick={() => setLamp(!lamp)}><LampDesk size={39} strokeWidth={1.4} /><span>{lamp ? 'Lights on' : 'Lights off'}</span></button>
-          <LeverMachine />
-          <MailPouch open={station} />
-        </div>
-      </div>
+        <aside className="maker-notebook" aria-labelledby="notes-title">
+          <p className="zone-label" id="notes-title">Maker’s notes</p>
+          <p>I’m a Computer Engineering student at Toronto Metropolitan University. I like building where technology meets the way people actually do things.</p>
+          {notes.slice(0, 3).map(([title, content]) => <details key={title}><summary>{title}</summary><p>{content}</p></details>)}
+        </aside>
+        <button className="landing-lamp" type="button" aria-label="Workshop lamp" aria-pressed={lamp} onClick={() => setLamp(!lamp)}><LampDesk size={25} strokeWidth={1.4} /></button>
+      </section>
 
       <section className="conveyor" aria-label="Project conveyor">
         <div className="belt-heading"><h2><PackageOpen size={18} /> Project conveyor</h2><p>Drag the belt or select a prototype to inspect it.</p></div>
@@ -215,6 +212,17 @@ export function Workshop({ projects, studies, stations }: { projects: Project[];
           <div className="inventory-count"><Cpu size={16} /> {projects.length} prototypes</div>
         </div>
       </section>
+
+      <ToolChest />
+      <section className="workshop-zone award-zone" aria-labelledby="awards-title">
+        <div className="zone-heading"><div><p className="zone-label">Awards & recognition</p><h2 id="awards-title">Trophy shelf.</h2></div></div>
+        <DisplayShelf />
+      </section>
+      <section className="workshop-zone idea-zone" aria-labelledby="machine-title">
+        <div className="zone-heading"><div><p className="zone-label">Workshop playground</p><h2 id="machine-title">Idea Machine.</h2><p>Pull the lever for a question about products, people, or everyday problems.</p></div></div>
+        <LeverMachine />
+      </section>
+      <section className="workshop-zone mail-zone" aria-label="Contact"><div><p className="zone-label">Get in touch</p><h2>Outgoing mail.</h2></div><MailPouch open={station} /></section>
 
       <noscript><div className="room-floor">{projects.map(project => <a key={project.slug} href={'/work/' + project.slug + '/'}>{project.name}</a>)}</div></noscript>
       <footer className="room-floor"><span>Toronto, Canada</span><span>Navjot Jaswal · Toronto Metropolitan University</span></footer>

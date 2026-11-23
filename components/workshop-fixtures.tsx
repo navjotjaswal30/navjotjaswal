@@ -1,47 +1,14 @@
 'use client';
 
 import { useRef, useState, type MouseEvent } from 'react';
-import { BookOpen, ChevronDown, CircuitBoard, Copy, Download, FileText, Mail, Send, Users } from 'lucide-react';
+import { Copy, Mail, Send } from 'lucide-react';
 import { awards, contact, prompts } from '../content/portfolio';
 
 type OpenStation = (id: string, target: HTMLElement) => void;
 
-const drawers = [
-  { id: 'about', title: 'Maker’s notes', object: 'Open the notebook', label: 'Navjot’s notebook', Icon: BookOpen },
-  { id: 'experience', title: 'Tool cabinet', object: 'Inspect the tools', label: 'Engineering & leadership', Icon: CircuitBoard },
-  { id: 'resume', title: 'Résumé', object: 'Open PDF', label: 'Navjot Jaswal · Résumé', Icon: FileText },
-];
-
-export function ToolCabinet({ open }: { open: OpenStation }) {
-  const [drawer, setDrawer] = useState<string | null>(null);
-  return <section className="real-cabinet" aria-label="Workshop cabinet">
-    <header><span>Workshop cabinet</span><span aria-hidden="true">✳</span></header>
-    {drawers.map(({ id, title, object, label, Icon }) => {
-      const expanded = drawer === id;
-      const toggle = () => setDrawer(expanded ? null : id);
-      return <div className={'cabinet-drawer ' + (expanded ? 'drawer-open' : '')} key={id}>
-        <div className="drawer-interior" id={'drawer-' + id} inert={!expanded}>
-          <div className="drawer-inner"><div className="drawer-object"><Icon size={20} strokeWidth={1.5} /><span>{label}</span></div>
-            {id === 'resume' ? <div className="drawer-links"><a href="/resume.pdf" target="_blank" rel="noreferrer">{object}</a><a href="/resume.pdf" download="Navjot-Jaswal-Resume.pdf" aria-label="Download résumé"><Download size={16} /></a></div>
-              : id === 'experience' ? <div className="drawer-tools">
-                <button type="button" onClick={event => open('technology', event.currentTarget)}><CircuitBoard size={20} /> Circuit board</button>
-                <button type="button" onClick={event => open('communities', event.currentTarget)}><Users size={20} /> Team roster</button>
-              </div> : <button type="button" className="drawer-action" onClick={event => open(id, event.currentTarget)}>{object}</button>}
-          </div>
-        </div>
-        <button type="button" className="drawer-front" aria-expanded={expanded} aria-controls={'drawer-' + id} onClick={toggle}>
-          <span>{title}</span><span className="drawer-handle"><ChevronDown size={15} /></span>
-        </button>
-      </div>;
-    })}
-    <div className="cabinet-feet" aria-hidden="true"><i /><i /></div>
-  </section>;
-}
-
 export function DisplayShelf() {
   const [selected, setSelected] = useState<number | null>(null);
   return <section className="real-shelf" aria-label="Trophy shelf">
-    <div className="shelf-heading">Trophy shelf</div>
     <div className="shelf-objects">{awards.map(([number, title], i) =>
       <button key={title} className={'shelf-award award-' + i} type="button" aria-label={title} aria-pressed={selected === i} onClick={() => setSelected(selected === i ? null : i)}>
         <span>{number}</span><i aria-hidden="true" />
