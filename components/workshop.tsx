@@ -116,9 +116,9 @@ export function Workshop({ projects, studies, portrait }: { projects: Project[];
 
   return <main id="main" className="workshop">
     <div className="room" data-left-lit={leftLight} data-right-lit={rightLight}>
-      <section className="landing-workbench" aria-label="Introducing Navjot Jaswal">
-        <div className={'landing-sign' + (portrait ? ' landing-sign-portrait' : '')}>
-          {portrait && <figure className="workshop-portrait"><Image src={portrait} alt="Navjot Jaswal" width={1125} height={1210} unoptimized priority /></figure>}
+      <section className={'landing-workbench' + (portrait ? ' landing-with-portrait' : '')} aria-label="Introducing Navjot Jaswal">
+        {portrait && <figure className="workshop-portrait"><Image src={portrait} alt="Navjot Jaswal" width={1125} height={1210} unoptimized priority /></figure>}
+        <div className="landing-sign">
           <h1>Navjot <em>Jaswal</em></h1>
           <p className="landing-tagline">I turn “what if?” into “what’s next.”</p>
         </div>
