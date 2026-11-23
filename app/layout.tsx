@@ -6,7 +6,7 @@ const origin = process.env.SITE_URL;
 const description = 'Explore the projects, product thinking, engineering work, and creative experiments of Navjot Jaswal, a Computer Engineering student at Toronto Metropolitan University.';
 export const metadata: Metadata = {
   ...(origin && { metadataBase: new URL(origin), alternates: { canonical: './' } }),
-  title: { default: 'Navjot Jaswal — The Idea Factory', template: '%s | Navjot Jaswal' },
+  title: 'Navjot Jaswal',
   description,
   openGraph: { title: 'Navjot Jaswal — The Idea Factory', description, type: 'website', ...(origin && { images: ['/social.png'] }) },
   twitter: { card: 'summary_large_image', title: 'Navjot Jaswal — The Idea Factory', description, ...(origin && { images: ['/social.png'] }) },
