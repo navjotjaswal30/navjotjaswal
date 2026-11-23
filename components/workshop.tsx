@@ -2,18 +2,11 @@
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
-import { ArrowDownLeft, ArrowLeft, ArrowRight, AudioLines, BookOpen, Cable, CircuitBoard, ClipboardList, Cpu, FileText, Gauge, LampDesk, Mail, PackageOpen, Pause, Play, Radar, Sparkles, Trophy, UserRound, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, AudioLines, BookOpen, Cable, ClipboardList, Cpu, Gauge, LampDesk, PackageOpen, Pause, Play, Radar, X } from 'lucide-react';
+import { DisplayShelf, LeverMachine, MailPouch, ToolCabinet } from './workshop-fixtures';
 import { type Project } from '../content/portfolio';
 
 export type Station = { id: string; title: string; content: ReactNode };
-const tools = [
-  { id: 'about', label: 'Maker’s notes', Icon: UserRound },
-  { id: 'experience', label: 'Tool cabinet', Icon: CircuitBoard },
-  { id: 'achievements', label: 'Trophy shelf', Icon: Trophy },
-  { id: 'resume', label: 'Résumé drawer', Icon: FileText },
-  { id: 'playground', label: 'Idea machine', Icon: Sparkles },
-  { id: 'contact', label: 'Outgoing mail', Icon: Mail },
-];
 const cargoIcons = [BookOpen, ClipboardList, AudioLines, Radar];
 const cargoNouns = ['Research dossier', 'Academic assistant', 'Lecture companion', 'Dispatch console'];
 
@@ -123,26 +116,25 @@ export function Workshop({ projects, studies, stations }: { projects: Project[];
     <header className="room-header">
       <Link className="room-brand" href="/"><span><Cable size={18} /></span> Navjot Jaswal</Link>
       <p>Engineering <b>×</b> Product</p>
-      <button type="button" onClick={event => station('contact', event.currentTarget)}><Mail size={16} /> Get in touch</button>
+      <span className="room-header-location">Toronto, Canada</span>
     </header>
 
     <div className="room">
       <div className="room-wall">
         <div className="wall-socket" aria-hidden="true" />
-        <aside className="pegboard" aria-label="Workshop stations">
-          <div className="pegboard-title"><span>Workshop stations</span><span aria-hidden="true">✳</span></div>
-          <div className="tools">{tools.map(({ id, label, Icon }) =>
-            <button key={id} type="button" onClick={event => station(id, event.currentTarget)}><Icon size={25} strokeWidth={1.5} /><span>{label}</span></button>
-          )}</div>
-        </aside>
-        <div className="room-sign">
-          <div className="sign-top"><span /> Navjot Jaswal’s workshop <span /></div>
-          <h1>The Idea<br /><em>Factory.</em></h1>
-          <p>Where I turn “what if?” into “what’s next.”</p>
+        <ToolCabinet open={station} />
+        <div className="room-center">
+          <div className="room-sign">
+            <div className="sign-top"><span /> The Idea Factory <span /></div>
+            <h1>Navjot<br /> <em>Jaswal</em></h1>
+            <p>I turn “what if?” into “what’s next.”</p>
+          </div>
+          <DisplayShelf />
         </div>
         <div className="room-fixtures">
-          <button className="desk-lamp" type="button" aria-label="Workshop lamp" aria-pressed={lamp} onClick={() => setLamp(!lamp)}><LampDesk size={57} strokeWidth={1.25} /><span>{lamp ? 'Lights on' : 'Lights off'}</span></button>
-          <button className="wall-note" type="button" onClick={event => station('playground', event.currentTarget)}><Sparkles size={19} /> <span>Pull an<br />idea.</span><ArrowDownLeft size={19} /></button>
+          <button className="desk-lamp" type="button" aria-label="Workshop lamp" aria-pressed={lamp} onClick={() => setLamp(!lamp)}><LampDesk size={39} strokeWidth={1.4} /><span>{lamp ? 'Lights on' : 'Lights off'}</span></button>
+          <LeverMachine />
+          <MailPouch open={station} />
         </div>
       </div>
 
